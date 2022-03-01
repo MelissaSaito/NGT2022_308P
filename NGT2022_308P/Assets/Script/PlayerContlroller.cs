@@ -13,24 +13,39 @@ using UnityEngine;
 public class PlayerContlroller : MonoBehaviour
 {
     //speedMagnificationはスピード調節用
-    public float speedMagnification, slowSpeedMagnification;
+    public float speedMagnification, slowSpeedMagnification, jumpVec;
 
-    public Vector3 movingForce;
     private Vector3 movingDirection, movingVelocity;
     new Rigidbody rigidbody;
+    Animator animator;
+
+    // 地面に着地しているか判定する変数
+    private bool grounded = false;
+
+    //地面にいるときのdrag(抵抗)の値
+    //private int groundedDrag = 10;
+    //ジャンプ(空中)にいるときのdragの値
+    //private int jumpDrag = 0;
+
+    public float JumpPower;//  ジャンプ力
+
+    // 抵抗値の変数
+    private float dragTag;
 
     public GameObject UpperBody; 
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    void FixedUpdate()
     {
         //コントローラーのLスティック&WSAD情報取得
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
+
 
         // 0 or 1に変換
         movingDirection = new Vector3(x, 0, z);
@@ -39,26 +54,30 @@ public class PlayerContlroller : MonoBehaviour
         //Idle時
         if (movingDirection.x == 0 && movingDirection.z == 0)
         {
+            //上のCube無くす
+            UpperBody.SetActive(true);
 
-            Animator animator = GetComponent<Animator>();
             animator.SetBool("Walk", false);
             animator.SetBool("Idle", true);
             movingVelocity.x = 0;
             movingVelocity.z = 0;
 
         }
+        //歩き処理
         else
         {
 
 
             //slow移動
-            if (Input.GetKey(KeyCode.E) || Input.GetButton("ControllerB"))
+            if (Input.GetKey(KeyCode.C) || Input.GetButton("ControllerB"))
             {
                 //確認用
                 Debug.Log("yeah");
 
+                //上のCube無くす
+                UpperBody.SetActive(false);
+
                 //
-                Animator animator = GetComponent<Animator>();
                 animator.SetBool("Slow", true);
 
                 movingVelocity = movingDirection * slowSpeedMagnification;
@@ -68,7 +87,10 @@ public class PlayerContlroller : MonoBehaviour
             //通常移動
             else
             {
-                Animator animator = GetComponent<Animator>();
+                //上のCube無くす
+                UpperBody.SetActive(true);
+
+
                 animator.SetBool("Walk", true);
                 animator.SetBool("Slow", false);
                 movingVelocity = movingDirection * speedMagnification;
@@ -78,17 +100,59 @@ public class PlayerContlroller : MonoBehaviour
 
         }
 
+        //歩き&slowの処理
+        this.rigidbody.AddForce(movingVelocity, ForceMode.Force);
+
+
+        //ジャンプ処理
+        if (grounded == true && Input.GetKeyDown(KeyCode.Space))
+        {
+            this.rigidbody.AddForce(transform.up * jumpVec, ForceMode.Force);
+        }
+        if(grounded == false)
+        {
+            Gravity();
+
+        }
+
+
+
+
         //聞き耳
         if (Input.GetButton("ControllerZL") || Input.GetButton("ControllerZR"))
         {
             //上のCube無くす
             UpperBody.SetActive(false);
         }
+
+        
+
     }
 
-    void FixedUpdate()
+    //接触があった時の処理
+    void OnCollisionStay(Collision other)
     {
-        this.rigidbody.AddForce(movingVelocity, ForceMode.Force);
+
+        if (other.collider.tag == "Stage")
+
+        {
+            grounded = true;
+            Debug.Log("unko");
+        }
     }
+    //接触が離れた時の処理
+
+    private void OnCollisionExit(Collision collision)
+    {
+        grounded = false;
+
+    }
+
+    //重力
+    void Gravity()
+    {
+        rigidbody.AddForce(new Vector3(0, -250, 0));
+    }
+
 }
 
