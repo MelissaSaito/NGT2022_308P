@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //ControllerA
@@ -32,12 +33,30 @@ public class PlayerContlroller : MonoBehaviour
     // 抵抗値の変数
     private float dragTag;
 
-    public GameObject UpperBody; 
+    public GameObject UpperBody;
+
+    //マップの表示
+    [SerializeField] private Image map;
+    bool map_on = false;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        map.enabled = false;
+    }
+
+    void Update()
+    {
+        if (map_on == true && (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("ControllerY")))
+        {
+            if (map.enabled == true)
+            {
+                map.enabled = false;
+                return;
+            }
+            map.enabled = true;
+        }
     }
 
     void FixedUpdate()
@@ -48,7 +67,7 @@ public class PlayerContlroller : MonoBehaviour
 
 
         // 0 or 1に変換
-        movingDirection = new Vector3(x, 0, z);
+        movingDirection = new Vector3(z, 0, x);
         movingDirection.Normalize();// 0 or 1
 
         //Idle時
@@ -124,9 +143,6 @@ public class PlayerContlroller : MonoBehaviour
             //上のCube無くす
             UpperBody.SetActive(false);
         }
-
-        
-
     }
 
     //接触があった時の処理
@@ -138,6 +154,12 @@ public class PlayerContlroller : MonoBehaviour
         {
             grounded = true;
             Debug.Log("unko");
+        }
+
+        if (other.gameObject.name == "map_item")
+        {
+            Destroy(other.gameObject);
+            map_on = true;
         }
     }
     //接触が離れた時の処理
