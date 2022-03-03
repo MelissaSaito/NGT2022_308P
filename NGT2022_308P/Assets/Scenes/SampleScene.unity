@@ -3643,6 +3643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a15a28662568c44b80f800aa713b5e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map_image: {fileID: 1973290751}
 --- !u!95 &1573368242
 Animator:
   serializedVersion: 3
