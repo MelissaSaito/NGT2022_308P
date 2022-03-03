@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //ControllerA
@@ -21,16 +22,32 @@ public class PlayerContlroller : MonoBehaviour
     float slowMoveSpeed = 5.0f;
     GameObject UpperBody;
 
+    //マップの表示
+    GameObject map_item;
+    [SerializeField] private Image map_image;
+    bool map_function = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         UpperBody = GameObject.Find("UpperBody");
-
+        map_item = GameObject.Find("map_item");
+        map_image.enabled = false;
     }
 
     void Update()
     {
         inputVertical = Input.GetAxisRaw("Vertical");
+
+        if(map_function == true && (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("ControllerY")))
+        {
+            if (map_image.enabled == true)
+            {
+                map_image.enabled = false;
+                return;
+            }
+            map_image.enabled = true;
+        }
     }
 
     void FixedUpdate()
@@ -66,4 +83,14 @@ public class PlayerContlroller : MonoBehaviour
 
     }
 
+
+    //接触があった時の処理
+    void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject == map_item)
+        {
+            other.gameObject.SetActive(false);
+            map_function = true;
+        }
+    }
 }
