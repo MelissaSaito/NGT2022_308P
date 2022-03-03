@@ -18,6 +18,10 @@ public class CameraController : MonoBehaviour
     {
         targetObj = GameObject.Find("Player");
         targetPos = targetObj.transform.position;
+        // targetの移動量分、自分（カメラ）も移動する
+        transform.position += targetObj.transform.position - targetPos;
+
+
     }
 
     void Update()
