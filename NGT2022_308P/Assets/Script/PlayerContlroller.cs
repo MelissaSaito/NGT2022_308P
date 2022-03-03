@@ -39,7 +39,7 @@ public class PlayerContlroller : MonoBehaviour
     {
         inputVertical = Input.GetAxisRaw("Vertical");
 
-        if (map_function == true && (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("ControllerY")))
+        if(map_function == true && (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("ControllerY")))
         {
             if (map_image.enabled == true)
             {
@@ -83,16 +83,14 @@ public class PlayerContlroller : MonoBehaviour
 
     }
 
+
     //ÚG‚ª‚ ‚Á‚½‚Ìˆ—
     void OnCollisionStay(Collision other)
     {
-
         if (other.gameObject == map_item)
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             map_function = true;
         }
     }
 }
-
-
