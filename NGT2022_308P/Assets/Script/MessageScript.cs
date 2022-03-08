@@ -32,37 +32,45 @@ public class MessageScript : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.I))// Aキーがおされたら、
-        //{
-        //    talkFlag++;
-        //}
-        //if (talkFlag == 0)
-        //{
-        //    //StartCoroutine("Message", message);// Messageコルーチンを実行する
-
-        //}
-        //if (talkFlag == 1)
-        //{
-        //    StartCoroutine("Message", message1);// Messageコルーチンを実行する
-        //}
-        //if (talkFlag == 2)
-        //{
-        //    StartCoroutine("Message", message2);// Messageコルーチンを実行する
-        //}
-        //if (talkFlag == 3)
-        //{
-        //    StartCoroutine("Message", message3);// Messageコルーチンを実行する
-        //}
-        //if (talkFlag == 4)
-        //{
-        //    StartCoroutine("Message", message4);// Messageコルーチンを実行する
-        //}
-        //if (talkFlag == 5)
-        //{
-        //    StartCoroutine("Message", message5);// Messageコルーチンを実行する
-        //}
-
     }
+
+    private void FixedUpdate()
+    {
+
+        //会話消去機能----------------------------------------------------
+        if (messageScript.eraseTimeFlag == true)
+        {
+            messageScript.displayTime += Time.deltaTime;
+
+        }
+        if (messageScript.displayTime >= 20.0f)
+        {
+            Debug.Log("消去フラグがたった");
+            messageScript.eraseFlag = true;
+            messageScript.eraseTimeFlag = false;
+            messageScript.displayTime = 0.0f;
+        }
+        //経過時間後の消去フラグ
+        if (messageScript.eraseFlag == true)
+        {
+
+            if (talk1 == false)
+            {
+                talk1 = true;
+            }
+            if (talk2 == false)
+            {
+                talk2 = true;
+            }
+
+            Debug.Log("消去しました");
+            messageScript.messageText.text = "";
+            messageScript.eraseFlag = false;
+
+        }
+        //---------------------------------------------------------------------
+    }
+
 
     //一定の範囲内に入ったとき（球体のclliderを半径５で作ってある）
     private void OnTriggerStay(Collider other)
