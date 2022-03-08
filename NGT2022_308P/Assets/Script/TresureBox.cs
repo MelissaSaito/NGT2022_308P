@@ -5,6 +5,7 @@ using UnityEngine;
 public class TresureBox : MonoBehaviour
 {
     GameObject Player;
+    public bool GameClear = false;
 
 
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class TresureBox : MonoBehaviour
                 Debug.Log("•ó•¨‚ğ“üè");
                 //ã‚ÌCubeÊ‚·
                 this.gameObject.SetActive(false);
+                GameClear = true;
             }
 
         }
