@@ -29,6 +29,9 @@ public class Message : MonoBehaviour
     private int stringsCount = 0;// 文字列の総行数
 
     public bool talkflag = false;//会話フラグ
+    public float displayTime = 0.0f;
+    public bool eraseFlag = false;
+    public bool eraseTimeFlag = false;
 
 
     void Start()
@@ -41,6 +44,10 @@ public class Message : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log(displayTime);
+
+
         if (isEndMessage || message == null)// もし、メッセージが終わっていない、または設定されているなら
         {
             return;// 返す
@@ -67,38 +74,15 @@ public class Message : MonoBehaviour
                 }
             }
 
+
             elapsedTime += Time.deltaTime;// 経過時間に時間の経過分足す
 
-            ////ここから左クリックして一気に表示させる処理
-            //if (Input.GetMouseButtonDown(0))// もし、メッセージ表示中に左クリックされたら、
-            //{
-            //    var allText = messageText.text;// allTextに、文字を入れる
-
-            //    for (var i = nowTextNum; i < message.Length; i++)// 表示するメッセージ文繰り返す
-            //    {
-            //        allText += message[i];//allTextに表示するi番目のメッセージを足す
-
-            //        if (message[i] == '\n')// もし、改行文字だったら、
-            //        {
-            //            nowLine++;// 今の行に一行足す
-            //        }
-
-            //        nowTextNum++;// 次の文字番号にする
-            //        textLength++;// 次の文字数にする
-
-            //        if (nowTextNum >= message.Length || textLength >= maxTextLength || nowLine >= maxLine)// もし、メッセージがすべて表示される、または１回表示限度を超えたなら、
-            //        {
-            //            messageText.text = allText;// messageTextをallTextにする
-            //            isOneMessage = true;// isOneMessageをtrueにする
-            //            break;// 処理を止める
-            //        }
-            //    }
-            //}
         }
 
         else// クリックされていなければ、
         {
             elapsedTime += Time.deltaTime;// 経過時間に時間の経過分足す
+            //displayTime += Time.deltaTime;
 
             if (elapsedTime >= clickFlashTime)// クリックアイコンを点滅する時間を超えたなら、
             {
@@ -108,17 +92,18 @@ public class Message : MonoBehaviour
 
             // クリックされたら次の文字を表示する処理
             //if (Input.GetMouseButtonDown(0))// もし、クリックされたら、
-            if (talkflag == true)// もし、クリックされたら、
+            if (talkflag == true)// 
             {
                 //messageText.text = "\n";
 
-                //messageText.text = "";// メッセージを空白にする
-                //nowLine = 0;// 今の行を0にする
+
                 clickIcon.enabled = false;// クリックアイコンをオフにする
                 elapsedTime = 0f;// 経過時間を0にする
                 textLength = 0;// 文字数を0にする
                 isOneMessage = false;// isOneMessageを0にする
                                      //messageText.text = "\n";
+
+                eraseTimeFlag = true;//表示時間計測
 
 
                 if (nowTextNum >= message.Length)// もし、メッセージが全部表示されていたら、
@@ -138,7 +123,12 @@ public class Message : MonoBehaviour
                     }
                 }
             }
+
+
+
         }
+
+
     }
 
     void SetMessage(string message)// SetMessage
