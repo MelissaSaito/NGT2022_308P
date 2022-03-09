@@ -37,38 +37,38 @@ public class MessageScript : MonoBehaviour
     private void FixedUpdate()
     {
 
-        //会話消去機能----------------------------------------------------
-        if (messageScript.eraseTimeFlag == true)
-        {
-            messageScript.displayTime += Time.deltaTime;
+        ////会話消去機能----------------------------------------------------
+        //if (messageScript.eraseTimeFlag == true)
+        //{
+        //    messageScript.displayTime += Time.deltaTime;
 
-        }
-        if (messageScript.displayTime >= 20.0f)
-        {
-            Debug.Log("消去フラグがたった");
-            messageScript.eraseFlag = true;
-            messageScript.eraseTimeFlag = false;
-            messageScript.displayTime = 0.0f;
-        }
-        //経過時間後の消去フラグ
-        if (messageScript.eraseFlag == true)
-        {
+        //}
+        //if (messageScript.displayTime >= 20.0f)
+        //{
+        //    //Debug.Log("消去フラグがたった");
+        //    messageScript.eraseFlag = true;
+        //    messageScript.eraseTimeFlag = false;
+        //    messageScript.displayTime = 0.0f;
+        //}
+        ////経過時間後の消去フラグ
+        //if (messageScript.eraseFlag == true)
+        //{
 
-            if (talk1 == false)
-            {
-                talk1 = true;
-            }
-            if (talk2 == false)
-            {
-                talk2 = true;
-            }
+        //    if (talk1 == false)
+        //    {
+        //        talk1 = true;
+        //    }
+        //    if (talk2 == false)
+        //    {
+        //        talk2 = true;
+        //    }
 
-            Debug.Log("消去しました");
-            messageScript.messageText.text = "";
-            messageScript.eraseFlag = false;
+        //    //Debug.Log("消去しました");
+        //    messageScript.messageText.text = "";
+        //    messageScript.eraseFlag = false;
 
-        }
-        //---------------------------------------------------------------------
+        //}
+        ////---------------------------------------------------------------------
     }
 
 
@@ -82,7 +82,7 @@ public class MessageScript : MonoBehaviour
             {
                 if (talk1 == true)
                 {
-                    Debug.Log("奥の部屋はちゃんと守られているだろうか");
+                    //Debug.Log("奥の部屋はちゃんと守られているだろうか");
                     StartCoroutine("Message", message1);// Messageコルーチンを実行する
                     messageScript.talkflag = true;
                     talk1 = false;
@@ -110,7 +110,7 @@ public class MessageScript : MonoBehaviour
             messageScript.talkflag = false;
 
 
-            Debug.Log("Hit Nothing");
+            //Debug.Log("Hit Nothing");
         }
 
         //Rayの表示（Sceneで）

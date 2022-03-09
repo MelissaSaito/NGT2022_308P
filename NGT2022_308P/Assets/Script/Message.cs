@@ -45,7 +45,7 @@ public class Message : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(displayTime);
+        //Debug.Log(displayTime);
 
 
         if (isEndMessage || message == null)// もし、メッセージが終わっていない、または設定されているなら
