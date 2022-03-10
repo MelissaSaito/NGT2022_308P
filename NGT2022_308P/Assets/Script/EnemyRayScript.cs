@@ -40,6 +40,7 @@ public class EnemyRayScript : MonoBehaviour
 
     private bool isFounded = false;//見つかる判定
 
+
     //enemyからplayerまで光線を出す
     private void FixedUpdate()
     {
@@ -53,29 +54,12 @@ public class EnemyRayScript : MonoBehaviour
         if (messageScript.displayTime >= 20.0f)
         {
             //Debug.Log("消去フラグがたった");
-            messageScript.eraseFlag = true;
+            //messageScript.eraseFlag = true;
+            EraseTalk();
             messageScript.eraseTimeFlag = false;
             messageScript.displayTime = 0.0f;
         }
-        //経過時間後の消去フラグ
-        if (messageScript.eraseFlag == true)
-        {
-
-            if (talk1 == false)
-            {
-                talk1 = true;
-            }
-            if (talk2 == false)
-            {
-                talk2 = true;
-            }
-
-            //Debug.Log("消去しました");
-            messageScript.messageText.text = "";
-            messageScript.eraseFlag = false;
-
-        }
-        //---------------------------------------------------------------------
+               //---------------------------------------------------------------------
 
 
         //enemy正面のベクトル
@@ -110,6 +94,27 @@ public class EnemyRayScript : MonoBehaviour
             //光線を赤色でDrawする
             Debug.DrawRay(transform.position, enemyForward * rayDistance, Color.red);
         }
+
+
+
+        //
+    }
+
+    void EraseTalk()
+    {
+        if (talk1 == false)
+        {
+            talk1 = true;
+        }
+        if (talk2 == false)
+        {
+            talk2 = true;
+        }
+
+        Debug.Log("消去しました");
+        messageScript.messageText.text = "";
+        messageScript.eraseFlag = false;
+
     }
 
     void ForwardToPlayer()
@@ -151,10 +156,19 @@ public class EnemyRayScript : MonoBehaviour
                     Debug.Log("奥の部屋はちゃんと守られているだろうか");
                     StartCoroutine("Message", message1);// Messageコルーチンを実行する
                     messageScript.talkflag = true;
+                    messageScript.eraseTimeFlag = true;
+
                     talk1 = false;
                 }
                 else
                 {
+                    if (messageScript.displayTime >= 20.0f)
+                    {
+                        EraseTalk();
+                        messageScript.eraseTimeFlag = false;
+                        messageScript.displayTime = 0.0f;
+
+                    }
                     messageScript.talkflag = false;
                 }
             }
