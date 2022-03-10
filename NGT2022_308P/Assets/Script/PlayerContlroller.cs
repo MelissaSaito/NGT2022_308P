@@ -18,7 +18,7 @@ public class PlayerContlroller : MonoBehaviour
     float inputVertical;
     Rigidbody rb;
 
-    float moveSpeed = 10.0f;
+    float moveSpeed = 15.0f;
     float slowMoveSpeed = 5.0f;
     GameObject UpperBody;
 
