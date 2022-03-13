@@ -8,7 +8,7 @@ public class DoorController : MonoBehaviour
 
     void OnTriggerStay()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) || Input.GetButtonUp("ControllerX"))
         {
             _animation.Play();
         }

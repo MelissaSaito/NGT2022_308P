@@ -78,7 +78,7 @@ public class MessageScript : MonoBehaviour
         if (other.gameObject.tag == ("Player"))
         {
             //K‚ð‰Ÿ‚·‚Æ‰ï˜b‚ªŽó‚¯Žæ‚ê‚é
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonUp("ControllerX"))
             {
                 if (talk1 == true)
                 {
