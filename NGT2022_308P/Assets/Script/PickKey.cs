@@ -16,7 +16,7 @@ public class PickKey : MonoBehaviour
     // Update is called once per frame
     void OnTriggerStay()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) || Input.GetButtonUp("ControllerX"))
         {
             doorcolliderhere.GetComponent<BoxCollider>().enabled = true;
             Key.SetActive(false);
